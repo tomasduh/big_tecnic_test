@@ -17,21 +17,25 @@ import { Head, Link } from '@inertiajs/vue3';
 
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8 my-2">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <!-- Card 1 -->
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">
-                        <Link :href="route('users')">
+                    <Link :href="route('users')" class="text-sm">
+                        <div class="p-6 text-gray-900 flex flex-col items-center space-y-2">
+                            <i class="fas fa-user-circle text-2xl"></i>
                             Users
-                        </Link>
-                    </div>
+                        </div>
+                    </Link>
                 </div>
 
                 <!-- Card 2 -->
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">
-                        Projects and Taks
-                    </div>
+                    <Link :href="route('users')" class="text-sm">
+                        <div class="p-6 text-gray-900 flex flex-col items-center space-y-2">
+                        <i class="fas fa-clipboard-list text-2xl"></i>
+                        Projects and Tasks
+                        </div>
+                    </Link>
                 </div>
+
             </div>
         </div>
     </AuthenticatedLayout>

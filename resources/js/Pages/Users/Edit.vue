@@ -1,5 +1,5 @@
 <script setup>
-import { Head, useForm, usePage} from '@inertiajs/vue3';
+import { Head, useForm, usePage, router } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 defineProps({
@@ -19,16 +19,26 @@ const form = useForm({
 <template>
     <Head title="Edit User" />
 
-    <AuthenticatedLayout>    
+    <AuthenticatedLayout>
         <template #header>
-            <h2
-                class="text-xl font-semibold leading-tight text-gray-800"
-            >
+            <h2 class="text-xl font-semibold leading-tight text-gray-800">
                 Edit User
             </h2>
-        </template>  
+        </template>
+
         <div class="py-12">
             <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
+                <!-- Menú para volver a la lista de usuarios -->
+                <div class="mb-4">
+                    <a
+                    :href="route('users')"
+                    class="inline-flex items-center text-sm text-indigo-600 hover:text-indigo-900"
+                    >
+                    Users
+                    </a>
+                    /Edit
+                </div>
+
                 <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8">
                     <Transition
                         enter-active-class="transition ease-in-out"
@@ -36,10 +46,7 @@ const form = useForm({
                         leave-active-class="transition ease-in-out"
                         leave-to-class="opacity-0"
                     >
-                        <p
-                            v-if="form.recentlySuccessful"
-                            class="text-sm text-green-600"
-                        >
+                        <p v-if="form.recentlySuccessful" class="text-sm text-green-600">
                             User Updated.
                         </p>
                     </Transition>
@@ -93,6 +100,5 @@ const form = useForm({
                 </div>
             </div>
         </div>
-
     </AuthenticatedLayout>
 </template>

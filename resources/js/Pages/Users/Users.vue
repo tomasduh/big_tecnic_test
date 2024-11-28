@@ -19,8 +19,18 @@ defineProps({
                 Users
             </h2>
         </template>
+
         <div class="py-12">
             <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
+                <div class="mb-4">
+                    <a
+                    :href="route('dashboard')"
+                    class="inline-flex items-center text-sm text-indigo-600 hover:text-indigo-900"
+                    >
+                    Home
+                    </a>
+                    /Users
+                </div>
                 <div
                     class="bg-white p-4 shadow sm:rounded-lg sm:p-8"
                 >
