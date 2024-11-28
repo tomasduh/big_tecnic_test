@@ -79,7 +79,7 @@ const deleteProject = (id) => {
                     class="text-indigo-600 hover:text-indigo-900"
                     @click="editProject(project.id)"
                   >
-                    Edit
+                    Update
                   </button>
                   <button
                     class="ml-4 text-red-600 hover:text-red-900"

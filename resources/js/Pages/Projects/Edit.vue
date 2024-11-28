@@ -14,6 +14,7 @@ defineProps({
 const project = usePage().props.project;
 const users = usePage().props.users;
 const errors = usePage().props.errors;
+const user = usePage().props.auth.user
 
 const form = useForm({
     id: project.id,
@@ -77,7 +78,7 @@ const deleteTask = (taskId) => {
                     >
                     Projects
                     </a>
-                    /Edit
+                    /Update
                 </div>
 
                 <div class="bg-white p-6 shadow sm:rounded-lg">
@@ -137,20 +138,20 @@ const deleteTask = (taskId) => {
                             <span v-if="errors.end_date" class="text-red-600 text-xs mt-1">{{ errors.end_date }}</span>
                         </div>
                         </div>
-
-                        <div class="mt-6">
-                        <button
-                            type="submit"
-                            class="rounded-md bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700"
-                            :disabled="form.processing"
-                        >
-                            Save Project
-                        </button>
+                        
+                        <div class="mt-6" v-if="user && user.role === 1" >
+                            <button
+                                type="submit"
+                                class="rounded-md bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700"
+                                :disabled="form.processing"
+                            >
+                                Save Project
+                            </button>
                         </div>
                     </form>
                 </div>
 
-                <div>
+                <div v-if="user && user.role === 1">
                     <button 
                     type="button"
                     class="rounded-md bg-green-600 px-4 py-2 text-white hover:bg-green-700"
@@ -217,6 +218,7 @@ const deleteTask = (taskId) => {
                             <button 
                                 @click="deleteTask(task.id)"
                                 class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
+                                v-if="user && user.role === 1"
                             >
                                 Delete
                             </button>
