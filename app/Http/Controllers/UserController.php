@@ -59,8 +59,19 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'role' => 'required|in:1,2', // 1 = Admin, 2 = User
+        ]);
+    
+        $user = User::findOrFail($id);
+    
+        $user->update($validatedData);
+    
+        return redirect()->route('user.edit', ['id' => $id])->with('success', 'User updated successfully.');
     }
+    
 
     /**
      * Remove the specified resource from storage.

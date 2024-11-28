@@ -3,11 +3,13 @@ import { Head, useForm, usePage} from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 defineProps({
-    user: Object, // Información del usuario
+    user: Object,
 });
+
 const user = usePage().props.user;
 
 const form = useForm({
+    id: user.id,
     name: user.name,
     email: user.email,
     role: user.role,
@@ -28,9 +30,21 @@ const form = useForm({
         <div class="py-12">
             <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
                 <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8">
+                    <Transition
+                        enter-active-class="transition ease-in-out"
+                        enter-from-class="opacity-0"
+                        leave-active-class="transition ease-in-out"
+                        leave-to-class="opacity-0"
+                    >
+                        <p
+                            v-if="form.recentlySuccessful"
+                            class="text-sm text-green-600"
+                        >
+                            User Updated.
+                        </p>
+                    </Transition>
                     <h2 class="text-lg font-bold mb-4">Edit User</h2>
-                    <form @submit.prevent="form.patch(route('profile.update'))">
-                        <!-- Contenedor de inputs con grid -->
+                    <form @submit.prevent="form.patch(route('user.update', form.id))">
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                             <!-- Campo Name -->
                             <div>
@@ -43,7 +57,6 @@ const form = useForm({
                                 />
                             </div>
 
-                            <!-- Campo Email -->
                             <div>
                                 <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
                                 <input
@@ -54,7 +67,6 @@ const form = useForm({
                                 />
                             </div>
 
-                            <!-- Campo Role -->
                             <div>
                                 <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
                                 <select
@@ -68,7 +80,6 @@ const form = useForm({
                             </div>
                         </div>
 
-                        <!-- Botón de Submit -->
                         <div class="mt-6">
                             <button
                                 type="submit"
