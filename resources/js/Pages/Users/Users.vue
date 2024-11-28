@@ -117,8 +117,7 @@ const editUser = (id) => {
 
 const deleteUser = (id) => {
     if (confirm('Are you sure you want to delete this user?')) {
-        console.log('Eliminar usuario con ID:', id);
-        // Lógica para eliminar usuario
+        router.delete(route('user.destroy', id));
     }
 };
 </script>
