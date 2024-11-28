@@ -81,15 +81,26 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validatedData = $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $id,
-            'role' => 'required|in:1,2', // 1 = Admin, 2 = User
+            'email' => 'required|email|unique:users,email',
+            'role' => 'required|in:1,2',
         ]);
+        
+        if ($validator->fails()) {
+            return Inertia::render('Users/Edit', [
+                'errors' => $validator->errors(),
+                'form' => $request->all(),  
+            ]);
+        }
     
         $user = User::findOrFail($id);
     
-        $user->update($validatedData);
+        $user->update([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'role' => $request->input('role'),
+        ]);
     
         return redirect()->route('user.edit', ['id' => $id])->with('success', 'User updated successfully.');
     }
