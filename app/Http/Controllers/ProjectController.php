@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Project;
 use App\Models\User;
 use Inertia\Inertia;
@@ -17,6 +18,14 @@ class ProjectController extends Controller
      public function index()
      {
         $projects = Project::withCount('tasks')->get();
+        $user = Auth::user();
+        if($user->role == 1 ){
+            $projects = Project::withCount('tasks')->get();
+        }else{
+            $projects = Project::whereHas('tasks', function($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })->withCount('tasks')->get();
+        }
         return Inertia::render('Projects/Projects', [
             'projects' => $projects,  
         ]);
@@ -63,8 +72,16 @@ class ProjectController extends Controller
      * Display the specified resource.
      */
     public function show(string $id)
-    {
-        $project = Project::with('tasks.user')->findOrFail($id);
+    {   
+        $user = Auth::user();
+        if($user->role == 1 ){
+            $project = Project::with('tasks.user')->findOrFail($id);
+        }else{
+            $project = Project::with(['tasks' => function ($query) {
+                $query->where('user_id', Auth::id()); 
+            }])->findOrFail($id);
+        }
+
         $users = User::all();
         return Inertia::render('Projects/Edit', [
             'project' => $project,  

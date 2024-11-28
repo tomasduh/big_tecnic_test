@@ -178,7 +178,7 @@ const deleteTask = (taskId) => {
                             <div class="flex flex-col space-y-2">
                                 <h3 class="font-semibold text-lg">{{ task.name }}</h3>
                                 <p class="text-gray-500 text-sm">{{ task.description }}</p>
-                                <label class="text-gray-500 text-sm">Responsable: {{ task.user.name }}</label>
+                                <label class="text-gray-500 text-sm">Responsable: {{ task.user?.name || user.name }}</label>
 
                                 <!-- Fechas -->
                                 <div class="text-sm text-gray-500">
@@ -212,6 +212,7 @@ const deleteTask = (taskId) => {
                                 @reload="reloadTask"
                                 :task="task" 
                                 :users="users"
+                                :user="user"
                             />
 
                             <!-- Botón Eliminar -->

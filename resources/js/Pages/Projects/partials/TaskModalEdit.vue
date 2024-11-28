@@ -11,6 +11,10 @@ const props = defineProps({
         type: Array,
         required: true,
     },
+    user: {
+        type: Array,
+        required: true,
+    },
 });
 const task_id = props.task.id
 const user_id = props.task.user_id
@@ -105,7 +109,7 @@ const submitForm = () => {
                     />
                 </div>
 
-                <div class="mb-4">
+                <div class="mb-4" v-if="user && user.role === 1">
                     <label for="user_id" class="block text-sm font-medium text-gray-700">Responsable</label>
                     <select
                         id="user_id"
