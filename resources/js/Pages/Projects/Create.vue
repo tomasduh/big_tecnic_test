@@ -1,8 +1,7 @@
 <script setup>
-import { Head, useForm, usePage } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
-const errors = usePage().props.errors;
 const form = useForm({
     name: '',
     description: '',
@@ -45,7 +44,7 @@ const form = useForm({
                 v-model="form.name"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               />
-              <span v-if="errors.name" class="text-red-600 text-xs mt-1">{{ errors.name }}</span>
+              <span v-if="form.errors.name" class="text-red-600 text-xs mt-1">{{ form.errors.name }}</span>
             </div>
 
             <div class="mb-4">
@@ -56,7 +55,7 @@ const form = useForm({
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 rows="4"
               ></textarea>
-              <span v-if="errors.description" class="text-red-600 text-xs mt-1">{{ errors.description }}</span>
+              <span v-if="form.errors.description" class="text-red-600 text-xs mt-1">{{ form.errors.description }}</span>
             </div>
 
             <div class="grid grid-cols-2 gap-6 mb-4">
@@ -68,7 +67,7 @@ const form = useForm({
                   v-model="form.start_date"
                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
-                <span v-if="errors.start_date" class="text-red-600 text-xs mt-1">{{ errors.start_date }}</span>
+                <span v-if="form.errors.start_date" class="text-red-600 text-xs mt-1">{{ form.errors.start_date }}</span>
               </div>
 
               <div>
@@ -79,7 +78,7 @@ const form = useForm({
                   v-model="form.end_date"
                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
-                <span v-if="errors.end_date" class="text-red-600 text-xs mt-1">{{ errors.end_date }}</span>
+                <span v-if="form.errors.end_date" class="text-red-600 text-xs mt-1">{{ form.errors.end_date }}</span>
               </div>
             </div>
 

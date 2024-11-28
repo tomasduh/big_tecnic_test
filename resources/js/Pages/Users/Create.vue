@@ -1,9 +1,8 @@
 <script setup>
-import { Head, useForm, usePage } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { ref } from 'vue'; 
 
-const errors = usePage().props.errors;
 const form = useForm({
     name: '',
     email: '',
@@ -31,7 +30,6 @@ const validatePasswords = () => {
 
     <div class="py-12">
       <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
-        <!-- Menú para volver a la lista de usuarios -->
         <div class="mb-4">
           <a
             :href="route('users')"
@@ -55,7 +53,8 @@ const validatePasswords = () => {
                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   required
                 />
-                <div v-if="errors.name" class="text-red-600 text-sm mt-1">{{ errors.name }}</div>
+
+                <div v-if="form.errors.name" class="text-red-600 text-sm mt-1">{{ form.errors.name }}</div>
               </div>
 
               <div>
@@ -67,7 +66,7 @@ const validatePasswords = () => {
                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   required
                 />
-                <div v-if="errors.email" class="text-red-600 text-sm mt-1">{{ errors.email }}</div>
+                <div v-if="form.errors.email" class="text-red-600 text-sm mt-1">{{ form.errors.email }}</div>
               </div>
 
               <div>
@@ -93,7 +92,7 @@ const validatePasswords = () => {
                   @input="validatePasswords"
                   required
                 />
-                <div v-if="errors.password" class="text-red-600 text-sm mt-1">{{ errors.password }}</div>
+                <div v-if="form.errors.password" class="text-red-600 text-sm mt-1">{{ form.errors.password }}</div>
               </div>
 
               <div>

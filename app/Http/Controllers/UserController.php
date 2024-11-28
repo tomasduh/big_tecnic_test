@@ -34,20 +34,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
         ]);
-        
-        if ($validator->fails()) {
-            return Inertia::render('Users/Create', [
-                'errors' => $validator->errors(),
-                'form' => $request->all(),  
-            ]);
-        }
     
-        $user = User::create([
+        User::create([
             'name' => $request->name,
             'email' => $request->email,
             'role' => $request->role,
