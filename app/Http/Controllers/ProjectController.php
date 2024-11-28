@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Project;
+use Inertia\Inertia;
 
 class ProjectController extends Controller
 {
@@ -14,8 +15,10 @@ class ProjectController extends Controller
     
      public function index()
      {
-        $projects = Project::all();
-        return view('projects.index', compact('projects'));
+        $projects = Project::withCount('tasks')->get();
+        return Inertia::render('Projects/Projects', [
+            'projects' => $projects,  
+        ]);
      }
 
     /**
@@ -23,7 +26,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Projects/Create');
     }
 
     /**

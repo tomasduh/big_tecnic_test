@@ -19,7 +19,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    
+
     Route::get('/users', [UserController::class, 'index'])->name('users');
     Route::get('/users/create', [UserController::class, 'create'])->name('user.create');
     Route::post('/users/store', [UserController::class, 'store'])->name('user.store');
@@ -28,6 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 
     Route::get('/projects', [ProjectController::class, 'index'])->name('projects');
+    Route::get('/projects/create', [ProjectController::class, 'create'])->name('project.create');
+    Route::post('/projects/store', [ProjectController::class, 'store'])->name('project.store');
     Route::get('/projects/{id}', [ProjectController::class, 'show'])->name('project.edit');
     Route::patch('/projects/{id}', [ProjectController::class, 'update'])->name('project.update');
     Route::delete('/projects/{id}', [ProjectController::class, 'destroy'])->name('project.destroy');
