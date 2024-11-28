@@ -42,22 +42,20 @@ class ProjectController extends Controller
         ]);
         
         if ($validator->fails()) {
-            return Inertia::render('Users/Create', [
+            return Inertia::render('Projects/Create', [
                 'errors' => $validator->errors(),
                 'form' => $request->all(),  
             ]);
         }
     
-        Project::create([
+        $project = Project::create([
             'name' => $request->name,
             'description' => $request->description,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
         ]);
     
-        return Inertia::location(route('projects.edit', ['project' => $project->id]))
-        ->with('success', 'Project create succesful.')
-        ->with('project', $project);
+        return Inertia::location(route('project.edit', ['id' => $project->id]));
     }
 
     /**
@@ -65,7 +63,10 @@ class ProjectController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $project = Project::find($id);
+        return Inertia::render('Projects/Edit', [
+            'project' => $project,  
+        ]);
     }
 
     /**

@@ -3,16 +3,17 @@ import { Head, useForm, usePage, router } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 defineProps({
-    user: Object,
+    project: Object,
 });
 
-const user = usePage().props.user;
+const project = usePage().props.project;
 
 const form = useForm({
-    id: user.id,
-    name: user.name,
-    email: user.email,
-    role: user.role,
+    id: project.id,
+    name: project.name,
+    description: project.description,
+    start_date: project.start_date,
+    end_date: project.start_date,
 });
 </script>
 
@@ -31,10 +32,10 @@ const form = useForm({
                 <!-- Menú para volver a la lista de usuarios -->
                 <div class="mb-4">
                     <a
-                    :href="route('users')"
+                    :href="route('projects')"
                     class="inline-flex items-center text-sm text-indigo-600 hover:text-indigo-900"
                     >
-                    Users
+                    Projects
                     </a>
                     /Edit
                 </div>
@@ -47,44 +48,12 @@ const form = useForm({
                         leave-to-class="opacity-0"
                     >
                         <p v-if="form.recentlySuccessful" class="text-sm text-green-600">
-                            User Updated.
+                            Project Updated.
                         </p>
                     </Transition>
-                    <h2 class="text-lg font-bold mb-4">Edit User</h2>
-                    <form @submit.prevent="form.patch(route('user.update', form.id))">
+                    <h2 class="text-lg font-bold mb-4">Edit Project</h2>
+                    <form @submit.prevent="form.patch(route('project.update', form.id))">
                         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                            <!-- Campo Name -->
-                            <div>
-                                <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    v-model="form.name"
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                />
-                            </div>
-
-                            <div>
-                                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    v-model="form.email"
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                />
-                            </div>
-
-                            <div>
-                                <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
-                                <select
-                                    id="role"
-                                    v-model="form.role"
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                >
-                                    <option value="1">Admin</option>
-                                    <option value="2">User</option>
-                                </select>
-                            </div>
                         </div>
 
                         <div class="mt-6">

@@ -119,7 +119,7 @@ const validatePasswords = () => {
                 class="rounded-md bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700"
                 :disabled="form.processing || passwordMismatch"
               >
-                Save
+                Create User
               </button>
             </div>
           </form>

@@ -10,9 +10,7 @@ const form = useForm({
     end_date: '',
 });
 
-const submitForm = () => {
-    form.post(route('project.store')); // Aquí estamos haciendo el POST al controlador para crear el proyecto.
-};
+
 </script>
 
 <template>
@@ -27,7 +25,6 @@ const submitForm = () => {
 
     <div class="py-12">
       <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
-        <!-- Menú para volver a la lista de proyectos -->
         <div class="mb-4">
           <a
             :href="route('projects')"
@@ -38,10 +35,8 @@ const submitForm = () => {
           /Create
         </div>
 
-        <!-- Formulario para crear un proyecto -->
         <div class="bg-white p-6 shadow sm:rounded-lg">
-          <form @submit.prevent="submitForm">
-            <!-- Nombre del Proyecto -->
+          <form @submit.prevent="form.post(route('project.store'))">
             <div class="mb-4">
               <label for="name" class="block text-sm font-medium text-gray-700">Project Name</label>
               <input
@@ -53,7 +48,6 @@ const submitForm = () => {
               <span v-if="errors.name" class="text-red-600 text-xs mt-1">{{ errors.name }}</span>
             </div>
 
-            <!-- Descripción del Proyecto -->
             <div class="mb-4">
               <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
               <textarea
@@ -65,9 +59,7 @@ const submitForm = () => {
               <span v-if="errors.description" class="text-red-600 text-xs mt-1">{{ errors.description }}</span>
             </div>
 
-            <!-- Fechas en dos columnas -->
             <div class="grid grid-cols-2 gap-6 mb-4">
-              <!-- Fecha de inicio -->
               <div>
                 <label for="start_date" class="block text-sm font-medium text-gray-700">Start Date</label>
                 <input
@@ -79,7 +71,6 @@ const submitForm = () => {
                 <span v-if="errors.start_date" class="text-red-600 text-xs mt-1">{{ errors.start_date }}</span>
               </div>
 
-              <!-- Fecha de finalización -->
               <div>
                 <label for="end_date" class="block text-sm font-medium text-gray-700">End Date</label>
                 <input
@@ -92,11 +83,11 @@ const submitForm = () => {
               </div>
             </div>
 
-            <!-- Botón para enviar el formulario -->
             <div class="mt-6">
               <button
                 type="submit"
-                class="w-full inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-white font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                class="rounded-md bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700"
+                :disabled="form.processing"
               >
                 Create Project
               </button>
