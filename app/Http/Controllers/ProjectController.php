@@ -44,29 +44,6 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        // $validator = Validator::make($request->all(), [
-        //     'name' => 'required|string|max:255',
-        //     'description' => 'nullable|string',
-        //     'start_date' => 'required|date|date_format:Y-m-d',
-        //     'end_date' => 'required|date|date_format:Y-m-d|after:start_date',
-        // ]);
-        
-        // if ($validator->fails()) {
-        //     return Inertia::render('Projects/Create', [
-        //         'errors' => $validator->errors(),
-        //         'form' => $request->all(),  
-        //     ]);
-        // }
-    
-        // $project = Project::create([
-        //     'name' => $reques;t->name,
-        //     'description' => $request->description,
-        //     'start_date' => $request->start_date,
-        //     'end_date' => $request->end_date,
-        // ]);
-    
-        // return Inertia::location(route('project.edit', ['id' => $project->id]))
-
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
