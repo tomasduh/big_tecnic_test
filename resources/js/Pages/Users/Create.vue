@@ -2,9 +2,6 @@
 import { Head, useForm, usePage } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { ref } from 'vue'; 
-defineProps({
-    user: Object,
-});
 
 const errors = usePage().props.errors;
 const form = useForm({
