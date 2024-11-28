@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Task;
+use Inertia\Inertia;
 
 class TaskController extends Controller
 {
@@ -27,18 +30,33 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+
+        $validator = Validator::make($request->all(), [
             'project_id' => 'nullable|exists:projects,id',
             'user_id' => 'nullable|exists:users,id',
             'name' => 'required|string|max:255',
-            'start_date' => 'required|date_format:H:i',
-            'end_date' => 'required|date_format:H:i|after:start_date',
-            'status' => 'required|integer|in:0,1,2',
+            'description' => 'nullable|string',
+            'start_date' => 'required|date|date_format:Y-m-d',
+            'end_date' => 'required|date|date_format:Y-m-d|after:start_date',
+        ]);
+        
+        if ($validator->fails()) {
+            return Inertia::back()  
+                ->withErrors($validator)
+                ->with('form', $request->all()); 
+        }
+    
+        $project = Task::create([
+            'project_id' => $request->project_id,
+            'user_id' => $request->user_id,
+            'name' => $request->name,
+            'description' => $request->description,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'status' => 0,
         ]);
     
-        Task::create($validated);
-    
-        return redirect()->back()->with('success', 'Tarea creada correctamente.');
+        return redirect()->route('project.edit', ['id' => $request->project_id])->with('success', 'Task created successfully.');
     }
 
     /**
