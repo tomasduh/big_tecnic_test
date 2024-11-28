@@ -28,7 +28,7 @@ import { Head, Link } from '@inertiajs/vue3';
 
                 <!-- Card 2 -->
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                    <Link :href="route('users')" class="text-sm">
+                    <Link :href="route('projects')" class="text-sm">
                         <div class="p-6 text-gray-900 flex flex-col items-center space-y-2">
                         <i class="fas fa-clipboard-list text-2xl"></i>
                         Projects and Tasks

@@ -31,71 +31,79 @@ defineProps({
                     </a>
                     /Users
                 </div>
-                <div
-                    class="bg-white p-4 shadow sm:rounded-lg sm:p-8"
-                >
+                <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-xl font-semibold text-gray-800">Users</h2>
+                        <!-- Botón Create -->
+                        <a
+                        :href="route('user.create')" 
+                        class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        >
+                        Create
+                        </a>
+                    </div>
+
                     <!-- Tabla de usuarios -->
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
-                            <tr>
-                                <th
-                                    scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                                >
-                                    Name
-                                </th>
-                                <th
-                                    scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                                >
-                                    Email
-                                </th>
-                                <th
-                                    scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                                >
-                                    Role
-                                </th>
-                                <th
-                                    scope="col"
-                                    class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500"
-                                >
-                                    Actions
-                                </th>
-                            </tr>
+                        <tr>
+                            <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                            >
+                            Name
+                            </th>
+                            <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                            >
+                            Email
+                            </th>
+                            <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                            >
+                            Role
+                            </th>
+                            <th
+                            scope="col"
+                            class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500"
+                            >
+                            Actions
+                            </th>
+                        </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white">
-                            <tr
-                                v-for="user in users"
-                                :key="user.id"
+                        <tr v-for="user in users" :key="user.id">
+                            <td class="px-6 py-4 text-sm text-gray-900">
+                            {{ user.name }}
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500">
+                            {{ user.email }}
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500">
+                            {{ user.role == 1 ? 'admin' : 'user' }}
+                            </td>
+                            <td class="px-6 py-4 text-right text-sm">
+                            <button
+                                class="text-indigo-600 hover:text-indigo-900"
+                                @click="editUser(user.id)"
                             >
-                                <td class="px-6 py-4 text-sm text-gray-900">
-                                    {{ user.name }}
-                                </td>
-                                <td class="px-6 py-4 text-sm text-gray-500">
-                                    {{ user.email }}
-                                </td>
-                                <td class="px-6 py-4 text-sm text-gray-500">
-                                    {{ user.role == 1 ? 'admin' : 'user' }}
-                                </td>
-                                <td class="px-6 py-4 text-right text-sm">
-                                    <button
-                                        class="text-indigo-600 hover:text-indigo-900"
-                                        @click="editUser(user.id)"
-                                    >
-                                        Edit
-                                    </button>
-                                    <button
-                                        class="ml-4 text-red-600 hover:text-red-900"
-                                        @click="deleteUser(user.id)"
-                                    >
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
+                                Edit
+                            </button>
+                            <button
+                                class="ml-4 text-red-600 hover:text-red-900"
+                                @click="deleteUser(user.id)"
+                            >
+                                Delete
+                            </button>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
-                </div>
+                    </div>
+
+
             </div>
         </div>
     </AuthenticatedLayout>
