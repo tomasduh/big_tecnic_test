@@ -1,8 +1,10 @@
 <script setup>
-import { Head, useForm, usePage,} from '@inertiajs/vue3';
+import { Head, useForm, usePage, router} from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import TaskModal from './Partials/TaskModal.vue';
+import TaskModalEdit from './Partials/TaskModalEdit.vue';
 import { ref } from 'vue';
+import { Inertia } from '@inertiajs/inertia';
 
 defineProps({
     project: Object,
@@ -22,17 +24,37 @@ const form = useForm({
 });
 
 const openModal = ref(false);
+const openModalEdit = ref(false);
+
 const openTaskModal = () => {
     openModal.value = true;
-};
-
-const reloadTask = () => {
-    Inertia.reload({ only: ['project'] });
 };
 
 const closeTaskModal = () => {
   openModal.value = false;
 };
+
+const closeTaskModalEdit = () => {
+    openModalEdit.value = false;
+};
+const reloadTask = () => {
+    Inertia.reload({ only: ['project'] });
+};
+
+const selectedTaskId = ref(null);
+
+const editTask = (taskId) => {
+    selectedTaskId.value = taskId;
+    openModalEdit.value = true;
+};
+
+const deleteTask = (taskId) => {
+    if (confirm('Are you sure you want to delete this task?')) {
+        router.delete(route('task.destroy', taskId));
+        reloadTask()
+    }
+};
+
 </script>
 
 <template>
@@ -133,7 +155,6 @@ const closeTaskModal = () => {
                     type="button"
                     class="rounded-md bg-green-600 px-4 py-2 text-white hover:bg-green-700"
                     @click="openTaskModal"
-                    :disabled="form.processing"
                     >
                     Create Task
                     </button>
@@ -151,15 +172,59 @@ const closeTaskModal = () => {
 
                 <div v-for="task in project.tasks" :key="task.id">
                     <div class="bg-white p-6 shadow sm:rounded-lg">
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <h3 class="font-semibold">{{ task.name }}</h3>
+                        <div class="flex justify-between items-start">
+                            <!-- Información de la tarea -->
+                            <div class="flex flex-col space-y-2">
+                                <h3 class="font-semibold text-lg">{{ task.name }}</h3>
                                 <p class="text-gray-500 text-sm">{{ task.description }}</p>
+                                <label class="text-gray-500 text-sm">Responsable: {{ task.user.name }}</label>
+
+                                <!-- Fechas -->
+                                <div class="text-sm text-gray-500">
+                                    <p><strong>Start Date:</strong> {{ task.start_date }}</p>
+                                    <p><strong>End Date:</strong> {{ task.end_date }}</p>
+                                </div>
                             </div>
-                            <span class="text-sm text-gray-500">{{ task.status }}</span>
+
+                            <!-- Estado de la tarea -->
+                            <div class="flex items-center">
+                                <span class="text-sm text-gray-500">
+                                    {{ task.status == 0 ? 'Pending' : task.status == 1 ? 'In Process' : 'Finished' }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Botones de acción: Editar y Eliminar -->
+                        <div class="flex justify-end mt-4 space-x-4">
+                            <!-- Botón Editar -->
+                            <button 
+                                @click="editTask(task.id)"
+                                class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+                            >
+                                Edit
+                            </button>
+
+                            <TaskModalEdit
+                                ref="taskModal" 
+                                v-if="openModalEdit && selectedTaskId === task.id"
+                                @close="closeTaskModalEdit" 
+                                @reload="reloadTask"
+                                :task="task" 
+                                :users="users"
+                            />
+
+                            <!-- Botón Eliminar -->
+                            <button 
+                                @click="deleteTask(task.id)"
+                                class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
+                            >
+                                Delete
+                            </button>
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </div>
     </AuthenticatedLayout>

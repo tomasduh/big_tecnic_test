@@ -80,7 +80,29 @@ class TaskController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'status' => 'required|in:0,1,2', 
+            'user_id' => 'required|exists:users,id',
+        ]);
+    
+        $task = Task::findOrFail($id); 
+    
+        $task->update([
+            'name' => $validated['name'],
+            'description' => $validated['description'],
+            'start_date' => $validated['start_date'],
+            'end_date' => $validated['end_date'],
+            'status' => $validated['status'],
+            'user_id' => $validated['user_id'],
+        ]);
+    
+        return redirect()->route('project.edit', $task->project_id)  // O la ruta a la que desees redirigir
+        ->with('success', 'Task updated successfully!')
+        ->setStatusCode(303);
     }
 
     /**
@@ -88,6 +110,14 @@ class TaskController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $user = Task::findOrFail($id);
+    
+            $user->delete();
+    
+            return redirect()->back()->with('success', 'User deleted successfully!');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error deleting user. Please try again later.']);
+        }
     }
 }

@@ -36,7 +36,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/projects/{id}', [ProjectController::class, 'destroy'])->name('project.destroy');
 
     Route::post('/tasks/store', [TaskController::class, 'store'])->name('task.store');
-    Route::get('/tasks/{id}', [TaskController::class, 'show'])->name('task.edit');
     Route::patch('/tasks/{id}', [TaskController::class, 'update'])->name('task.update');
     Route::delete('/tasks/{id}', [TaskController::class, 'destroy'])->name('task.destroy');
 });
