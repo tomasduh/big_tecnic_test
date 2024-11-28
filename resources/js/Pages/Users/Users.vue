@@ -34,7 +34,6 @@ defineProps({
                 <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8">
                     <div class="flex justify-between items-center mb-4">
                         <h2 class="text-xl font-semibold text-gray-800">Users</h2>
-                        <!-- Botón Create -->
                         <a
                         :href="route('user.create')" 
                         class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -43,7 +42,6 @@ defineProps({
                         </a>
                     </div>
 
-                    <!-- Tabla de usuarios -->
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                         <tr>
@@ -101,9 +99,7 @@ defineProps({
                         </tr>
                         </tbody>
                     </table>
-                    </div>
-
-
+                </div>
             </div>
         </div>
     </AuthenticatedLayout>
