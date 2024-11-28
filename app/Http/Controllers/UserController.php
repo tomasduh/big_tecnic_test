@@ -3,18 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use Inertia\Inertia;
 
-class ProjectController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    
-     public function index()
-     {
-        $projects = Project::all();
-        return view('projects.index', compact('projects'));
-     }
+    public function index()
+    {
+        $users = User::all();
+        return Inertia::render('Users/Users', [
+            'users' => $users,  
+        ]);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -29,16 +32,7 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'start_date' => 'required|date_format:H:i',
-            'end_date' => 'required|date_format:H:i|after:start_date',
-        ]);
-    
-        Project::create($validated);
-    
-        return redirect()->back()->with('success', 'Proyecto creado correctamente.');
+        //
     }
 
     /**
@@ -46,7 +40,10 @@ class ProjectController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = User::find($id);
+        return Inertia::render('Users/Edit', [
+            'user' => $user,  
+        ]);
     }
 
     /**

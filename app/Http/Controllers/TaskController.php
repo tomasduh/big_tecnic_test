@@ -27,7 +27,18 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'project_id' => 'nullable|exists:projects,id',
+            'user_id' => 'nullable|exists:users,id',
+            'name' => 'required|string|max:255',
+            'start_date' => 'required|date_format:H:i',
+            'end_date' => 'required|date_format:H:i|after:start_date',
+            'status' => 'required|integer|in:0,1,2',
+        ]);
+    
+        Task::create($validated);
+    
+        return redirect()->back()->with('success', 'Tarea creada correctamente.');
     }
 
     /**
