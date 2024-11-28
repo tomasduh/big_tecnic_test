@@ -11,7 +11,7 @@ const form = useForm({
 });
 
 const submitForm = () => {
-    form.post(route('projects.store')); // Aquí estamos haciendo el POST al controlador para crear el proyecto.
+    form.post(route('project.store')); // Aquí estamos haciendo el POST al controlador para crear el proyecto.
 };
 </script>
 
