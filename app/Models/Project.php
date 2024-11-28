@@ -25,12 +25,12 @@ class Project extends Model
 
     public function getStartDateAttribute($value)
     {
-        return date('H:i', strtotime($value));
+        return \Carbon\Carbon::parse($value)->format('Y-m-d');
     }
-
+    
     public function getEndDateAttribute($value)
     {
-        return date('H:i', strtotime($value));
+        return \Carbon\Carbon::parse($value)->format('Y-m-d');
     }
 
 }
